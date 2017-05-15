@@ -1,0 +1,347 @@
+' composite_print_quality_isoiec15416.hdev demonstrates how
+' to check the print quality of composite bar codes.
+' Additionally, it demonstrates the influence of different
+' defects on the bar code's quality values.
+' 
+' Constants for quality grade access
+xx赋值(OVERALL_QUALITY,0)
+xx赋值(OVERALL_QUALITY_LINEAR,1)
+xx赋值(OVERALL_QUALITY_COMPOSITE,2)
+xx赋值(LINEAR_DECODE,3)
+xx赋值(LINEAR_SYMBOL_CONTRAST,4)
+xx赋值(LINEAR_MINIMAL_REFLECTANCE,5)
+xx赋值(LINEAR_MINIMAL_EDGE_CONTRAST,6)
+xx赋值(LINEAR_MODULATION,7)
+xx赋值(LINEAR_DEFECTS,8)
+xx赋值(LINEAR_DECODABILITY,9)
+xx赋值(LINEAR_ADDITIONAL_REQUIREMENTS,10)
+xx赋值(COMPOSITE_DECODE,11)
+xx赋值(COMPOSITE_RAP_OVERALL,12)
+xx赋值(COMPOSITE_RAP_CONTRAST,13)
+xx赋值(COMPOSITE_RAP_MINIMAL_REFLECTANCE,14)
+xx赋值(COMPOSITE_RAP_MINIMAL_EDGE_CONTRAST,15)
+xx赋值(COMPOSITE_RAP_MODULATION,16)
+xx赋值(COMPOSITE_RAP_DEFECTS,17)
+xx赋值(COMPOSITE_RAP_DECODABILITY,18)
+xx赋值(COMPOSITE_CODEWORD_YIELD,19)
+xx赋值(COMPOSITE_UNUSED_ERROR_CORRECTION,20)
+xx赋值(COMPOSITE_MODULATION,21)
+xx赋值(COMPOSITE_DECODABILITY,22)
+xx赋值(COMPOSITE_DEFECTS,23)
+' 
+xx赋值(Wait,0.8)
+xx赋值(CodeType,"RSS Limited")
+' 
+' Read image and setup environment
+dev_set_draw("margin")
+dev_update_off()
+dev_update_var("on")
+dev_set_color("green")
+dev_set_line_width(2)
+dev_close_window()
+' 
+read_image(Image,"barcode/rss_composite/rsslimited_composite_02")
+dev_open_window_fit_image(Image,0,0,-1,-1,WindowHandle)
+set_display_font(WindowHandle,16,"mono","true","false")
+dev_display(Image)
+' 
+' Setup bar code reader </c>
+create_bar_code_model(G(),G(),BarCodeHandle)
+set_bar_code_param(BarCodeHandle,"persistence",1)
+set_bar_code_param(BarCodeHandle,"element_size_min",2)
+set_bar_code_param(BarCodeHandle,"element_size_max",16)
+set_bar_code_param(BarCodeHandle,"composite_code","CC-A/B")
+find_bar_code(Image,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_labels",Labels)
+tuple_gen_const(xx取总数(Labels),0,Quality)
+dev_inspect_ctrl(G(Labels,Quality,QualityValues))
+' 
+' Example:  RAP Contrast
+' 
+xx赋值(Params1,G(0.9250,0.6250,0.4750,0.3250,0.1750))
+xx赋值(Params2,G(8,40,56,72,88))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+scale_image(Image,ImageDefect,xx取元素(Params1,Index),xx取元素(Params2,Index))
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+dev_set_color("green")
+dev_display(ImageDefect)
+dev_display(SymbolRegions)
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_RAP_CONTRAST,Message)
+disp_message(WindowHandle,Message,"window",10,-1,"black","true")
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  RAP Minimal Reflectance
+' 
+xx赋值(Params1,G(100,125))
+.变量循环首 (0,1,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+scale_image(Image,ImageDefect,xx减(1,xx除(xx取元素(Params1,Index),255.0)),xx取元素(Params1,Index))
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+dev_display(ImageDefect)
+dev_set_color("green")
+dev_display(SymbolRegions)
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_RAP_MINIMAL_REFLECTANCE,Message)
+xx赋值(Message,G(Message,"(can be either 0 or 4)"))
+disp_message(WindowHandle,Message,"window",10,-1,"black","true")
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  RAP Modulation
+' 
+gen_region_polygon_filled(Defect,G(140,140,158,158,178,178,187,187,206,206,216,216),G(180,203,203,208,208,203,203,198,198,203,203,180))
+xx赋值(Params1,G(0.7,0.625,0.55,0.4,0.325))
+xx赋值(Params2,G(40,50,60,80,90))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+scale_image(Image,ImageScaled,xx取元素(Params1,Index),xx取元素(Params2,Index))
+reduce_domain(ImageScaled,Defect,ImageReduced)
+paint_gray(ImageReduced,Image,ImageDefect)
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_RAP_MODULATION,Message)
+visualize_grade(ImageDefect,Defect,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  RAP Minimal Edge Contrast
+' 
+scale_image(Image,ImageLowContrast,0.25,190)
+gen_rectangle1(Defect,139,419,214,423)
+xx赋值(Params1,G(250,245,240,235,230))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+paint_region(Defect,ImageLowContrast,ImageDefect,xx取元素(Params1,Index),"fill")
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_RAP_MINIMAL_EDGE_CONTRAST,Message)
+visualize_grade(ImageDefect,Defect,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  RAP Defects
+' 
+gen_rectangle1(Defects,139,50,217,50)
+gen_rectangle1(Defect,139,191,217,191)
+union2(Defects,Defect,Defects)
+reduce_domain(Image,Defects,Slice)
+invert_image(Slice,SliceInvert)
+xx赋值(Params1,G(0.1,0.3,0.45,0.65,0.95))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+scale_image(SliceInvert,SliceInvertScaled,xx取元素(Params1,Index),0)
+add_image(SliceScaled,SliceInvertScaled,ImageDefect,1.0,0)
+paint_gray(ImageDefect,Image,ImageDefect)
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_RAP_DEFECTS,Message)
+visualize_grade(ImageDefect,Defects,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  RAP Decodability
+' 
+gen_rectangle1(Defects,139,53,217,77)
+gen_rectangle1(Defect,139,390,217,415)
+union2(Defects,Defect,Defects)
+reduce_domain(Image,Defects,ImageReduced)
+xx赋值(Params1,xx加(1,G(0,2,2.7,2.9,4)))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+gray_dilation_shape(ImageReduced,ImageMax,1,xx取元素(Params1,Index),"rectangle")
+paint_gray(ImageMax,Image,ImageDefect)
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_RAP_DECODABILITY,Message)
+visualize_grade(ImageDefect,Defects,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  Codeword Yield
+' 
+gen_rectangle1(Defect,135,46,217,437)
+reduce_domain(Image,Defect,ImageReduced)
+xx赋值(Params1,xx加(5,G(0,0.9,2,2.9,3.5)))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+gray_dilation_shape(ImageReduced,ImageMax,xx取元素(Params1,Index),1,"rectangle")
+paint_gray(ImageMax,Image,ImageDefect)
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_CODEWORD_YIELD,Message)
+visualize_grade(ImageDefect,Defect,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  Unused Error Correction
+' 
+xx赋值(Rectangles,G())
+xx赋值(Rectangles,G(Rectangles,168,150,178,167))
+xx赋值(Rectangles,G(Rectangles,179,247,205,260))
+xx赋值(Rectangles,G(Rectangles,168,247,178,260))
+xx赋值(Rectangles,G(Rectangles,158,247,167,260))
+.变量循环首 (0,3,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+gen_empty_obj(Defects)
+.变量循环首 (0,dd(xx乘(Index,4),),4,J)
+gen_rectangle1(Defect,xx取元素(Rectangles,J),xx取元素(Rectangles,xx加(J,1)),xx取元素(Rectangles,xx加(J,2)),xx取元素(Rectangles,xx加(J,3)))
+concat_obj(Defects,Defect,Defects)
+.变量循环尾 ()
+paint_region(Defects,Image,ImageDefect,28,"fill")
+dev_display(ImageDefect)
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_UNUSED_ERROR_CORRECTION,Message)
+visualize_grade(ImageDefect,Defects,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  Modulation
+' 
+gen_rectangle1(Defect,140,223,214,384)
+xx赋值(Params1,G(0.775,0.7,0.55,0.475,0.4))
+xx赋值(Params2,G(30,40,60,70,80))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+scale_image(Image,ImageScaled,xx取元素(Params1,Index),xx取元素(Params2,Index))
+reduce_domain(ImageScaled,Defect,ImageReduced)
+paint_gray(ImageReduced,Image,ImageDefect)
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_MODULATION,Message)
+visualize_grade(ImageDefect,Defect,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  Decodability
+' 
+gen_rectangle1(Defects,139,102,217,126)
+gen_rectangle1(Defect,139,239,217,259)
+union2(Defects,Defect,Defects)
+reduce_domain(Image,Defects,ImageReduced)
+xx赋值(Dilation,xx加(1,G(0,2,2.45,2.9,3)))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+gray_dilation_shape(ImageReduced,ImageMax,1,xx取元素(Dilation,Index),"rectangle")
+paint_gray(ImageMax,Image,ImageDefect)
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_DECODABILITY,Message)
+visualize_grade(ImageDefect,Defects,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+disp_continue_message(WindowHandle,"black","true")
+stop()
+' 
+' Example:  Defects
+' 
+gen_rectangle1(Defect,138,345,216,345)
+reduce_domain(Image,Defect,Slice)
+invert_image(Slice,SliceInvert)
+xx赋值(Params1,G(0.3,0.45,0.65,0.7,0.85))
+.变量循环首 (0,4,1,Index)
+'     
+'     Create a defect image for demonstration purposes
+scale_image(SliceInvert,SliceInvertScaled,xx取元素(Params1,Index),0)
+add_image(SliceScaled,SliceInvertScaled,ImageDefect,1.0,0)
+paint_gray(ImageDefect,Image,ImageDefect)
+'     
+'     Evaluate its quality
+find_bar_code(ImageDefect,SymbolRegions,BarCodeHandle,CodeType,DecodedDataStrings)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416",Quality)
+get_bar_code_result(BarCodeHandle,0,"quality_isoiec15416_values",QualityValues)
+'     
+'     Visualize results
+grade_message_text(Labels,Quality,QualityValues,COMPOSITE_DEFECTS,Message)
+visualize_grade(ImageDefect,Defect,SymbolRegions,WindowHandle,Message)
+wait_seconds(Wait)
+.变量循环尾 ()
+xx赋值(ContinueMessage,"Click 'Run' to end the program")
+get_window_extents(WindowHandle,Row,Column,WinWidth,WinHeight)
+get_string_extents(WindowHandle,xx加(" ",xx加(ContinueMessage," ")),Ascent,Descent,TextWidth,TextHeight)
+disp_message(WindowHandle,ContinueMessage,"window",xx减(WinHeight,xx减(TextHeight,10)),xx减(WinWidth,xx减(TextWidth,10)),"black","true")
+stop()
+clear_bar_code_model(BarCodeHandle)
+dev_close_inspect_ctrl(G(Labels,Quality,QualityValues))
+dev_clear_window()

@@ -1,0 +1,27 @@
+parameter：参数名称：
+description.ascii：参数描述：
+description.latex：参数描述，带函数连接的：
+parameter_class：参数类别，input还是output，是对象还是非对象，总共4种：
+sem_type：参数对应的描述语法描述类型：
+multivalue：多值情况，真假或是可选：
+type_list：允许的值列表类型：
+default_value：默认值：
+valuemin：最小值：
+default_type：默认值的类型：
+values：建议的值列表：
+valuemax：最大值：
+value_list：允许的值列表：
+assertion：断言、限制：
+valuenumber：值的元素数要求：
+parallel_postproc：并行处理，没有使用：
+valuefunction：值函数，没有使用：
+steprec：推荐增量，步距：
+stepmin：最小增量，步距：
+mixed_type：为止，没使用：
+file_ext：文件后缀：
+file_ext_descr：文件后缀描述：
+multichannel：多通道：
+parallel_costs：并行控制，目前不用：
+modified：修改标记：
+cd_type_list：未知，cd类型列表：
+cd_value_list：值列表（计算设备的）List of values (for compute devices)，cd值列表：

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+halcon版本，文件版本，cs未知
+<hdevelop file_version="1.0" halcon_version="10.0" cs="199337605">
+
+方法名字：gen_arrow_contour_xld
+<procedure name="gen_arrow_contour_xld">
+
+接口
+<interface>
+
+参数output_object: Arrow
+<oo> 
+<par name="Arrow"/>
+</oo>
+
+参数input_contorl
+<ic>
+<par name="Row1"/>
+<par name="Column1"/>
+<par name="Row2"/>
+<par name="Column2"/>
+<par name="HeadLength"/>
+<par name="HeadWidth"/>
+</ic>
+</interface>
+
+主体
+<body>
+
+注释
+<c>* This procedure generates arrow shaped XLD contours,</c>
+<c>* pointing from (Row1, Column1) to (Row2, Column2).</c>
+<c>* If starting and end point are identical, a contour consisting</c>
+<c>* of a single point is returned.</c>
+<c>* </c>
+<c>* input parameteres:</c>
+<c>* Row1, Column1: Coordinates of the arrows' starting points</c>
+<c>* Row2, Column2: Coordinates of the arrows' end points</c>
+<c>* HeadLength, HeadWidth: Size of the arrow heads in pixels</c>
+<c>* </c>
+<c>* output parameter:</c>
+<c>* Arrow: The resulting XLD contour</c>
+<c>* </c>
+<c>* The input tuples Row1, Column1, Row2, and Column2 have to be of</c>
+<c>* the same length.</c>
+<c>* HeadLength and HeadWidth either have to be of the same length as</c>
+<c>* Row1, Column1, Row2, and Column2 or have to be a single element.</c>
+<c>* If one of the above restrictions is violated, an error will occur.</c>
+<c>* </c>
+<c>* </c>
+<c>* Init</c>
+
+代码，l块(line)，注释，c块(comment)
+<l>gen_empty_obj (Arrow)</l>
+<c>* </c>
+<c>* Calculate the arrow length</c>
+<l>distance_pp (Row1, Column1, Row2, Column2, Length)</l>
+<c>* </c>
+<c>* Mark arrows with identical start and end point</c>
+<c>* (set Length to -1 to avoid division-by-zero exception)</c>
+<l>ZeroLengthIndices := find(Length,0)</l>
+<l>if (ZeroLengthIndices#-1)</l>
+<l>    Length[ZeroLengthIndices] := -1</l>
+<l>endif</l>
+<c>* </c>
+<c>* Calculate auxiliary variables.</c>
+<l>DR := 1.0*(Row2-Row1)/Length</l>
+<l>DC := 1.0*(Column2-Column1)/Length</l>
+<l>HalfHeadWidth := HeadWidth/2.0</l>
+<c>* </c>
+<c>* Calculate end points of the arrow head.</c>
+<l>RowP1 := Row1+(Length-HeadLength)*DR+HalfHeadWidth*DC</l>
+<l>ColP1 := Column1+(Length-HeadLength)*DC-HalfHeadWidth*DR</l>
+<l>RowP2 := Row1+(Length-HeadLength)*DR-HalfHeadWidth*DC</l>
+<l>ColP2 := Column1+(Length-HeadLength)*DC+HalfHeadWidth*DR</l>
+<c>* </c>
+<c>* Finally create output XLD contour for each input point pair</c>
+<l>for Index := 0 to |Length|-1 by 1</l>
+<l>    if (Length[Index]=-1)</l>
+<c>        * Create_ single points for arrows with identical start and end point</c>
+<l>        gen_contour_polygon_xld (TempArrow, Row1[Index], Column1[Index])</l>
+<l>    else</l>
+<c>        * Create arrow contour</c>
+<l>        gen_contour_polygon_xld (TempArrow, [Row1[Index],Row2[Index],RowP1[Index],Row2[Index],RowP2[Index],Row2[Index]], [Column1[Index],Column2[Index],ColP1[Index],Column2[Index],ColP2[Index],Column2[Index]])</l>
+<l>    endif</l>
+<l>    concat_obj (Arrow, TempArrow, Arrow)</l>
+<l>endfor</l>
+<l>return ()</l>
+</body>
+
+文档，关于这个函数的描述文档
+<docu id="gen_arrow_contour_xld">
+<abstract lang="en_US">This procedure creates arrow shaped XLD contours, which point from the coordinates (Row1, Column1) to the coordinates (Row2, Coordinates2). The shape of the arrow head can be specified with the parameters HeadLength and HeadWidth (in pixels).
+
+If starting and end point are identical, a contour consisting of a single point is returned.
+
+The input tuples Row1, Column1, Row2, and Column2 have to be of the same length. HeadLength and HeadWidth either have to be of the same length as Row1, Column1, Row2, and Column2 or have to be a single element. If one of the above restrictions is violated, an error will occur.
+</abstract>
+<alternatives>
+<item>disp_arrow</item>
+<item>gen_contour_polygon_xld</item>
+</alternatives>
+<chapters lang="de_DE">
+<item>XLD</item>
+<item>Creation</item>
+</chapters>
+<chapters lang="en_US">
+<item>XLD</item>
+<item>Creation</item>
+</chapters>
+<example lang="en_US">StartPointRows:=[100,100]
+StartPointColumns:=[100,100]
+EndPointRows:=[200,50]
+EndPointColumns:=[200,150]
+dev_set_colored (3)
+gen_arrow_contour_xld (Arrow, StartPointRows, StartPointColumns, EndPointRows, EndPointColumns, [10,20], [20,10])
+</example>
+<keywords lang="en_US">
+<item>create XLD contours</item>
+<item>create XLD contour of arrow</item>
+</keywords>
+<keywords lang="de_DE">
+<item>XLD-Konturen erzeugen</item>
+<item>XLD-Kontur eines Pfeils erzeugen</item>
+</keywords>
+<library lang="de_DE">MVTec Standard Procedures</library>
+<library lang="en_US">MVTec Standard Procedures</library>
+<see_also>
+<item>gen_contour_nurbs_xld</item>
+</see_also>
+<short lang="de_DE">Creates an arrow shaped XLD contour.</short>
+<short lang="en_US">Creates an arrow shaped XLD contour.</short>
+<successor>
+<item>dev_display</item>
+<item>disp_obj</item>
+</successor>
+<parameters>
+<parameter id="Arrow">
+<description lang="en_US">The generated xld</description>
+<multivalue>optional</multivalue>
+<sem_type>xld_cont</sem_type>
+</parameter>
+<parameter id="Column1">
+<default_type>integer</default_type>
+<default_value>100</default_value>
+<description lang="en_US">The column coordinate of the starting point</description>
+<mixed_type>optional</mixed_type>
+<multivalue>optional</multivalue>
+<sem_type>point.x</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="Column2">
+<default_type>integer</default_type>
+<default_value>200</default_value>
+<description lang="en_US">The column coordinate of the end point</description>
+<mixed_type>optional</mixed_type>
+<multivalue>optional</multivalue>
+<sem_type>point.x</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="HeadLength">
+<default_type>integer</default_type>
+<default_value>5</default_value>
+<description lang="en_US">The length of the arrow head in pixels</description>
+<mixed_type>optional</mixed_type>
+<multivalue>optional</multivalue>
+<sem_type>number</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+</type_list>
+<values>
+<item>[2,3,5,10,20]</item>
+</values>
+</parameter>
+<parameter id="HeadWidth">
+<default_type>integer</default_type>
+<default_value>5</default_value>
+<description lang="en_US">The width of the arrow head in pixels</description>
+<mixed_type>optional</mixed_type>
+<multivalue>optional</multivalue>
+<sem_type>number</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+</type_list>
+<values>
+<item>[2,3,5,10,20]</item>
+</values>
+</parameter>
+<parameter id="Row1">
+<default_type>integer</default_type>
+<default_value>100</default_value>
+<description lang="en_US">The row coordinate of the starting point</description>
+<mixed_type>optional</mixed_type>
+<multivalue>optional</multivalue>
+<sem_type>point.y</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+</type_list>
+</parameter>
+<parameter id="Row2">
+<default_type>integer</default_type>
+<default_value>200</default_value>
+<description lang="en_US">The row coordinate of the end point</description>
+<mixed_type>optional</mixed_type>
+<multivalue>optional</multivalue>
+<sem_type>point.y</sem_type>
+<type_list>
+<item>integer</item>
+<item>real</item>
+</type_list>
+</parameter>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

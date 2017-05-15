@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="10.0" cs="611988995">
+<procedure name="main">
+<interface/>
+<body>
+<l>tuple_chr (0x12ff12b0ff, DegreeSign)</l>
+<c></c>
+<l>global def tuple gDispObjOffset</l>
+<l>global def tuple gLabelsFont</l>
+<l>global def tuple gLabelsDecor</l>
+<l>global def tuple gInfoFont</l>
+<l>global def tuple gInfoDecor</l>
+<l>global def tuple gInfoPos</l>
+<l>global def tuple gTitleFont</l>
+<l>global def tuple gTitlePos</l>
+<l>global def tuple gTitleDecor</l>
+<l>global tuple gDispObjOffset</l>
+<l>global tuple gLabelsFont</l>
+<l>global tuple gLabelsDecor</l>
+<l>global tuple gLabelsFont</l>
+<l>global tuple gInfoFont</l>
+<l>global tuple gInfoDecor</l>
+<l>global tuple gInfoPos</l>
+<l>global tuple gTitleFont</l>
+<l>global tuple gTitlePos</l>
+<l>global tuple gTitleDecor</l>
+<l>select_obj (Domains, Boxes, Ind[ |Ind|-3:|Ind|-1 ] + 1)</l>
+<l>Ind3 := [ Ind1[Ind2[0]],  Ind1[Ind2[|Ind2|-1]] ]</l>
+<l>T1 := [ X[Ind3[0]], Y[Ind3[0]], Z[Ind3[0]] ]-[ X[Ind3[1]], Y[Ind3[1]], Z[Ind3[1]] ]</l>
+<l>Ind3 := [ Ind1[Ind2[0]],  Ind1[Ind2[|Ind2|-1]] ]</l>
+<l>T2 := [ X[Ind3[0]], Y[Ind3[0]], Z[Ind3[0]] ]-[ X[Ind3[1]], Y[Ind3[1]], Z[Ind3[1]] ]</l>
+<l>c := [c, a[1]*b[2]-a[2]*b[1] ]</l>
+<l>c := [c, a[2]*b[0]-a[0]*b[2] ]</l>
+<l>c := [c, a[0]*b[1]-a[1]*b[0] ]</l>
+<l>global tuple gDispObjOffset</l>
+<l>global tuple gLabelsFont</l>
+<l>global tuple gLabelsDecor</l>
+<l>global def tuple gDispObjOffset</l>
+<l>global def tuple gLabelsFont</l>
+<l>global def tuple gLabelsDecor</l>
+<l>global def tuple gInfoFont</l>
+<l>global def tuple gInfoDecor</l>
+<l>global def tuple gInfoPos</l>
+<l>global def tuple gTitleFont</l>
+<l>global def tuple gTitlePos</l>
+<l>global def tuple gTitleDecor</l>
+<l>global tuple gLabelsFont</l>
+<l>global tuple gInfoFont</l>
+<l>global tuple gInfoDecor</l>
+<l>global tuple gInfoPos</l>
+<l>global tuple gTitleFont</l>
+<l>global tuple gTitlePos</l>
+<l>global tuple gTitleDecor</l>
+<l>Message := ['Value:', DecodedDataStrings[I-1]{0:(Length/2)-1}, DecodedDataStrings[I-1]{Length/2:Length-1}]</l>
+<l>select_tuple_larger (-FishLength1, -(TargetLength-ToleranceLow), IndicesBad2)</l>
+<l>global def tuple gDispObjOffset</l>
+<l>global def tuple gLabelsFont</l>
+<l>global def tuple gLabelsDecor</l>
+<l>global def tuple gInfoFont</l>
+<l>global def tuple gInfoDecor</l>
+<l>global def tuple gInfoPos</l>
+<l>global def tuple gTitleFont</l>
+<l>global def tuple gTitlePos</l>
+<l>global def tuple gTitleDecor</l>
+<l>global tuple gDispObjOffset</l>
+<l>global tuple gLabelsFont</l>
+<l>global tuple gLabelsDecor</l>
+<l>global tuple gLabelsFont</l>
+<l>global tuple gInfoFont</l>
+<l>global tuple gInfoDecor</l>
+<l>global tuple gInfoPos</l>
+<l>global tuple gTitleFont</l>
+<l>global tuple gTitlePos</l>
+<l>global tuple gTitleDecor</l>
+<l>tuple_chr (0xb0, DegreeSign)</l>
+<l>dev_update_off ( )</l>
+<l>tuple_chr (0xb0, DegreeSign)</l>
+<l>tuple_chr (0xb0, DegreeSign)</l>
+<l>global tuple gLabelsFont</l>
+<l>global tuple gInfoFont</l>
+<l>global tuple gInfoDecor</l>
+<l>global tuple gInfoPos</l>
+<l>global tuple gTitleFont</l>
+<l>global tuple gTitlePos</l>
+<l>global tuple gTitleDecor</l>
+<l>global def tuple gDispObjOffset</l>
+<l>global def tuple gLabelsFont</l>
+<l>global def tuple gLabelsDecor</l>
+<l>global def tuple gInfoFont</l>
+<l>global def tuple gInfoDecor</l>
+<l>global def tuple gInfoPos</l>
+<l>global def tuple gTitleFont</l>
+<l>global def tuple gTitlePos</l>
+<l>global def tuple gTitleDecor</l>
+<l>global tuple gDispObjOffset</l>
+<l>global tuple gLabelsFont</l>
+<l>global tuple gLabelsDecor</l>
+<l>disp_message (WindowHandle, 'Orientation = ' + Orientation[I] $ '.1f'+chr(0xb0), 'image', Row[I]-30, Column[I]-120, 'black', 'true')</l>
+<l>Message := Mode + ': '+InputOrient+chr(0xb0)+' +/- '+InputOrientTol+chr(0xb0)</l>
+<l>NewExposure := min( [ExposureRange[1], Exposure] )</l>
+<l>if (Parameters[i]{0:2} = 'do_')</l>
+<l>if (Parameters[i]{0:2} = 'do_')</l>
+<l>set_framegrabber_param (AcqHandle, 'register_address', 0x00000520)</l>
+<l>BaseValue := 0x02000000</l>
+<l>GrabCount := 0x00000001</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (Parameters[i]{0:2} = 'do_')</l>
+<l>if (Parameters[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_' or Access = 'wo')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_' or Access = 'wo')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_' or Access = 'wo')</l>
+<l>CurrentParameter := ParameterInfoValues[i]{0:Position-1}</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_' or Access = 'wo')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>NewExposure := min( [ExposureRange[1], Exposure] )</l>
+<l>NewExposure := min( [ExposureRange[1], Exposure] )</l>
+<l>if (HalconError = H_MSG_TRUE or ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>if (ParameterInfoValues[i]{0:2} = 'do_')</l>
+<l>To := [ From[0], From[1] ]</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

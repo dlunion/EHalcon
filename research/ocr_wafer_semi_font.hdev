@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="10.0" cs="260796714">
+<procedure name="main">
+<interface/>
+<body>
+<c>* </c>
+<c>* This example describes one step from the semiconductor product chain.</c>
+<c>* In the front-end-of-line step, the ICs are printed on the wafer. To</c>
+<c>* tag a single wafer from the production life line, each wafer receives</c>
+<c>* an ID number, printed with the SEMI font. This ID number is read here.</c>
+<c>* </c>
+<l>dev_update_off ()</l>
+<l>dev_close_window ()</l>
+<l>read_image (Image, 'ocr/wafer_semi_font_01')</l>
+<l>dev_open_window_fit_image (Image, 0, 0, -1, -1, WindowHandle)</l>
+<l>dev_set_draw ('margin')</l>
+<l>set_display_font (WindowHandle, 16, 'mono', 'true', 'false')</l>
+<l>dev_set_line_width (2)</l>
+<l>dev_set_colored (12)</l>
+<c>* </c>
+<l>read_ocr_class_mlp ('SEMI', OCRHandle)</l>
+<l>NumImages := 10</l>
+<l>for Index := 1 to NumImages by 1</l>
+<c>    * </c>
+<c>    * Segment characters</c>
+<l>    read_image (Image, 'ocr/wafer_semi_font_'+Index$'02')</l>
+<c>    * Characters must be black-on-white, i.e., dark characters on a light background</c>
+<l>    invert_image (Image, ImageInvert)</l>
+<l>    mean_image (Image, ImageMean, 31, 31)</l>
+<l>    dyn_threshold (Image, ImageMean, RegionDynThresh, 7, 'light')</l>
+<c>    * Characters are often dotted. Therefore, we first merge close dots</c>
+<c>    * that belong to the same character just before calling the operator connection</c>
+<l>    closing_circle (RegionDynThresh, RegionClosing, 2.0)</l>
+<l>    connection (RegionClosing, ConnectedRegions)</l>
+<c>    * Filter out characters based on two facts:</c>
+<c>    * 1. Characters are printed in SEMI-12. Therefore we can make strong assumptions</c>
+<c>    *    on the dimensions of the characters</c>
+<c>    * 2. Characters are printed along a straight line</c>
+<l>    select_shape (ConnectedRegions, SelectedRegions1, ['height', 'width'], 'and', [29, 15], [60, 40])</l>
+<l>    area_center (SelectedRegions1, Area, RowCh, ColumnCh)</l>
+<l>    MedianRow := median(RowCh)</l>
+<l>    select_shape (SelectedRegions1, Chars, 'row', 'and', MedianRow - 30, MedianRow + 30)</l>
+<c>    * </c>
+<c>    * Read out segmented characters</c>
+<l>    sort_region (Chars, CharsSorted, 'character', 'true', 'column')</l>
+<l>    shape_trans (CharsSorted, Characters, 'rectangle1')</l>
+<l>    do_ocr_multi_class_mlp (Characters, ImageInvert, OCRHandle, Class, Confidence)</l>
+<c>    * </c>
+<l>    dev_display (ImageInvert)</l>
+<l>    dilation_rectangle1 (Characters, RegionDilation, 7, 7)</l>
+<l>    dev_display (RegionDilation)</l>
+<l>    area_center (CharsSorted, Area1, Row, Column)</l>
+<l>    MeanRow := mean(Row)</l>
+<l>    for IndexL := 0 to |Class|-1 by 1</l>
+<l>        disp_message (WindowHandle, Class[IndexL], 'image', MeanRow + 40, Column[IndexL]-20, 'black', 'true')</l>
+<l>    endfor</l>
+<l>    if (Index # NumImages)</l>
+<l>        disp_continue_message (WindowHandle, 'black', 'true')</l>
+<l>        stop ()</l>
+<l>    endif</l>
+<l>endfor</l>
+<l>clear_ocr_class_mlp (OCRHandle)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

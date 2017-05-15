@@ -1,0 +1,49 @@
+
+' Writing to a non existing vector element is allowed. If necessary,
+' the vector is automatically filled with empty elements.
+Vector5.at(4) := Tuple
+' Vector elements can be used as parameters for operators or procedures
+' (as long as they have the required type).
+for I := 0 to ImageVector.length() - 1 by 1
+sobel_amp (ImageVector.at(I), ImageVectorSobel.at(I), 'sum_abs', 3)
+endfor
+' 
+' It is also possible to combine several .at() expressions to access the
+' subelements of multidimensional vectors.
+Vector3dim.at(1).at(0) := {5,6}
+' Even the following is possible (though not exactly recommended).
+Vector3dim.at(0).at(1).at(1)[0] := 8
+' 
+' Vector length:
+' The number of elements of a vector can be accessed with .length()
+Length := Vector1.length()
+' 
+' Vector manipulation:
+' .clear() clears a vector, i.e., removes all its elements:
+Vector3dimCopy := Vector3dim
+Vector3dimCopy.clear()
+' Note, that the cleared vectors still keep their variable type. The
+' following assignments cause a type conflict and, therefore, are invalid!
+* Vector3dimCopy.at(0) := 1
+* Vector3dimCopy.at(0) := {1}
+' .remove() removes an element with given index from a vector.
+Vector5.remove(0)
+' 
+' .insert() inserts at the given position one vector element into a vector.
+Vector5.insert(1,2)
+' Again, the vector gets filled up with empty elements where necessary.
+Vector5.insert(8,10)
+' 
+' Vector conversion:
+' Convert a tuple into a one-dimensional vector
+Tuple3 := [1,2,3,4,5,6,7,8]
+convert_tuple_to_vector_1d (Tuple3, 1, Vector1FromTuple3)
+convert_tuple_to_vector_1d (Tuple3, 2, Vector2FromTuple3)
+' convert_vector_to_tuple concatenates all tuples that are contained in the
+' input vector of arbitrary dimension and stores them in the single
+' output tuple.
+convert_vector_to_tuple (Vector5, TupleFromVector5)
+convert_vector_to_tuple (Vector2dim, TupleFromVector2dim)
+' 
+' The variable view can be used to inspect vector variables
+dev_inspect_ctrl ([Tuple3,Vector1FromTuple3,Vector2FromTuple3,Vector5,TupleFromVector5,Vector2dim,TupleFromVector2dim,Vector3dim])

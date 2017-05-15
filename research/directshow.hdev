@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="10.0" cs="902227254">
+<procedure name="main">
+<interface/>
+<body>
+<c>* </c>
+<c>* Example for the usage of a DirectShow compatible capture device</c>
+<c>* (performance evaluation)</c>
+<c>* </c>
+<l>close_all_framegrabbers ()</l>
+<c>* </c>
+<c>* check interface revision:</c>
+<l>info_framegrabber ('DirectShow', 'revision', RevInfo, RevInfoValues)</l>
+<c>* </c>
+<c>* check your installed camera devices:</c>
+<l>info_framegrabber ('DirectShow', 'info_boards', BoardInfo, BoardInfoValues)</l>
+<c>* </c>
+<c>* open first camera device with current video settings:</c>
+<l>open_framegrabber ('DirectShow', 1, 1, 0, 0, 0, 0, 'default', -1, 'default', -1, 'false', 'default', 'default', -1, -1, AcqHandle)</l>
+<c>* </c>
+<c>* query current settings:</c>
+<l>get_framegrabber_param (AcqHandle, 'camera_type', CurrentCameraType)</l>
+<l>get_framegrabber_param (AcqHandle, 'frame_rate', CurrentFrameRate)</l>
+<c>* </c>
+<l>grab_image (Image, AcqHandle)</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>dev_close_window ()</l>
+<l>dev_open_window (0, 0, Width, Height, 'black', WindowID)</l>
+<l>dev_display (Image)</l>
+<l>dev_update_window ('off')</l>
+<l>dev_update_pc ('off')</l>
+<l>dev_update_var ('off')</l>
+<c>* </c>
+<l>count_seconds (Seconds1)</l>
+<l>for i := 1 to 100 by 1</l>
+<l>    grab_image_async (Image, AcqHandle, -1)</l>
+<l>*     grab_image (Image, AcqHandle)</l>
+<l>endfor</l>
+<l>count_seconds (Seconds2)</l>
+<l>for i := 1 to 100 by 1</l>
+<l>    sobel_amp (Image, EdgeAmplitude, 'sum_abs', 3)</l>
+<l>endfor</l>
+<l>count_seconds (Seconds3)</l>
+<l>for i := 1 to 100 by 1</l>
+<l>    grab_image_async (Image, AcqHandle, -1)</l>
+<l>    sobel_amp (Image, EdgeAmplitude, 'sum_abs', 3)</l>
+<l>endfor</l>
+<l>count_seconds (Seconds4)</l>
+<c>* </c>
+<l>dev_update_window ('on')</l>
+<l>dev_update_pc ('on')</l>
+<l>dev_update_var ('on')</l>
+<l>TimeGrab := (Seconds2-Seconds1)/100</l>
+<l>TimeSobel := (Seconds3-Seconds2)/100</l>
+<l>TimeAll := (Seconds4-Seconds3)/100</l>
+<l>Overhead := TimeAll-TimeSobel</l>
+<l>stop ()</l>
+<c>* </c>
+<l>while (1)</l>
+<l>    grab_image_async (Image, AcqHandle, -1)</l>
+<l>*     grab_image (Image, AcqHandle)</l>
+<l>endwhile</l>
+<l>stop ()</l>
+<c>* </c>
+<l>close_framegrabber (AcqHandle)</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

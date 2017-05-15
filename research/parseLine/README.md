@@ -1,0 +1,3 @@
+# ParseLine
+该代码是实现halcon代码解析的主要工具
+halcon代码转换到易语言是需要他的支持

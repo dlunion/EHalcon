@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="e.lib.core\e.lib.core.cpp" />
+    <ClCompile Include="e.lib.core\function.impl.cpp" />
+    <ClCompile Include="e.lib.core\function.plus.cpp" />
+    <ClCompile Include="e.lib.utils\bmp.cpp" />
+    <ClCompile Include="e.lib.utils\e.lib.utils.cpp" />
+    <ClCompile Include="e.lib\entry.cpp" />
+    <ClCompile Include="ehalcon.core\ehalcon.core.cpp" />
+    <ClCompile Include="ehalcon.utils\ehalcon.utils.cpp" />
+    <ClCompile Include="ehalcon.utils\objectInfo.cpp" />
+    <ClCompile Include="ehalcon.utils\windowManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="def.h" />
+    <ClInclude Include="e.lib.core.define\arg.h" />
+    <ClInclude Include="e.lib.core.define\arg.halcon.h" />
+    <ClInclude Include="e.lib.core.define\const.h" />
+    <ClInclude Include="e.lib.core.define\dataType.h" />
+    <ClInclude Include="e.lib.core.define\eDefine.h" />
+    <ClInclude Include="e.lib.core.define\function.cmd.h" />
+    <ClInclude Include="e.lib.core.define\function.exe.h" />
+    <ClInclude Include="e.lib.core.define\function.h" />
+    <ClInclude Include="e.lib.core.define\function.halcon.cmd.h" />
+    <ClInclude Include="e.lib.core.define\function.halcon.exe.h" />
+    <ClInclude Include="e.lib.core\e.lib.core.h" />
+    <ClInclude Include="e.lib.core\function.halcon.impl.h" />
+    <ClInclude Include="e.lib.core\function.impl.h" />
+    <ClInclude Include="e.lib.utils\bmp.h" />
+    <ClInclude Include="e.lib.utils\e.lib.utils.h" />
+    <ClInclude Include="ehalcon.core\ehalcon.core.h" />
+    <ClInclude Include="ehalcon.utils\ehalcon.utils.h" />
+    <ClInclude Include="ehalcon.utils\objectInfo.h" />
+    <ClInclude Include="ehalcon.utils\windowManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="e.lib.core\function.halcon.impl.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{C8652811-E034-4742-9D44-CE42D594325B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>ehalcon</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v100</PlatformToolset>
+    <UseOfMfc>Static</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <IncludePath>../lean/include/elib;../lean/include/halcon;../lean/include/halcon/cpp;./;$(IncludePath)</IncludePath>
+    <LibraryPath>../lean/lib/x86sse2-win32;$(LibraryPath)</LibraryPath>
+    <TargetExt>.fne</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IncludePath>../lean/include/elib;../lean/include/halcon;../lean/include/halcon/cpp;./;$(IncludePath)</IncludePath>
+    <LibraryPath>../lean/lib/x86sse2-win32;$(LibraryPath)</LibraryPath>
+    <TargetExt>.fne</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>def.def</ModuleDefinitionFile>
+      <MinimumRequiredVersion>5.04</MinimumRequiredVersion>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
+      <SupportUnloadOfDelayLoadedDLL>false</SupportUnloadOfDelayLoadedDLL>
+      <SupportNobindOfDelayLoadedDLL>false</SupportNobindOfDelayLoadedDLL>
+    </Link>
+    <PostBuildEvent>
+      <Command>exit
+taskkill /f /im e.exe
+ping localhost -n 2 &gt;nul
+copy /y H:\research\halcon\1.汉化版本v1.0\e_library_12\project\src\Release\ehalcon.fne H:\research\e\4.13~\lib\
+
+start "" H:\research\halcon\1.汉化版本v1.0\e_library_12\project\test\2.eproject\abc.e</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>def.def</ModuleDefinitionFile>
+      <SupportUnloadOfDelayLoadedDLL>false</SupportUnloadOfDelayLoadedDLL>
+      <MinimumRequiredVersion>5.04</MinimumRequiredVersion>
+      <DelayLoadDLLs>
+      </DelayLoadDLLs>
+      <SupportNobindOfDelayLoadedDLL>false</SupportNobindOfDelayLoadedDLL>
+    </Link>
+    <PostBuildEvent>
+      <Command>exit
+taskkill /f /im e.exe
+ping localhost -n 2 &gt;nul
+copy /y H:\research\halcon\1.汉化版本v1.0\e_library_12\project\src\Release\ehalcon.fne H:\research\e\4.13~\lib\
+
+start "" H:\research\halcon\1.汉化版本v1.0\e_library_12\project\test\2.eproject\abc.e</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

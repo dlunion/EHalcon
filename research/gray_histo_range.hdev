@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="10.0" cs="431443745">
+<procedure name="main">
+<interface/>
+<body>
+<c>* This example shows how to use gray_histo_range to calculate</c>
+<c>* the gray value histogram of an image in a user-defined gray</c>
+<c>* value range and bin size.</c>
+<c>* </c>
+<l>dev_update_off ()</l>
+<l>dev_close_window ()</l>
+<l>read_image (Image, 'mreut_dgm_2.0.tif')</l>
+<l>get_image_size (Image, Width, Height)</l>
+<l>dev_open_window (0, 0, Width, Height, 'black', WindowHandleImage)</l>
+<l>dev_open_window (0, Width+5, Width, Height, 'black', WindowHandleHisto)</l>
+<l>set_display_font (WindowHandleImage, 14, 'mono', 'true', 'false')</l>
+<l>set_display_font (WindowHandleHisto, 14, 'mono', 'true', 'false')</l>
+<l>SelectionColor := 'orange'</l>
+<c>* </c>
+<c>* Calculate the gray value distribution of the image</c>
+<l>HistoBorder := 0.2</l>
+<l>min_max_gray (Image, Image, 0, Min, Max, Range)</l>
+<l>gray_histo_range (Image, Image, Min, Max, int(Max-Min+1), Histo, BinSize)</l>
+<c>* </c>
+<c>* Main loop (abort with right mouse button)</c>
+<l>Button := 1</l>
+<l>while (Button # 4)</l>
+<c>    * </c>
+<c>    * Display original image</c>
+<l>    dev_set_window (WindowHandleImage)</l>
+<l>    dev_display (Image)</l>
+<l>    disp_message (WindowHandleImage, 'Original image', 'window', 12, 12, 'black', 'true')</l>
+<c>    * </c>
+<c>    * Display histogram</c>
+<l>    dev_set_window (WindowHandleHisto)</l>
+<l>    dev_clear_window ()</l>
+<l>    dev_set_draw ('fill')</l>
+<l>    plot_histo (Histo, WindowHandleHisto, 'Gray values', Min, Max, 'white', 'dim gray', HistoBorder)</l>
+<c>    * </c>
+<c>    * Let the user select a gray-value range</c>
+<l>    disp_message (WindowHandleHisto, 'Use mouse to select gray-value range in histogram', 'image', 12, 12, SelectionColor, 'false')</l>
+<l>    dev_set_color (SelectionColor)</l>
+<l>    draw_rectangle1 (WindowHandleHisto, Row1, Col1, Row2, Col2)</l>
+<c>    * </c>
+<c>    * Calculate the gray value histogram within the selected range</c>
+<l>    MinZoom := (Col1-Width*HistoBorder)*(Max-Min)/(Width*(1.0-2.0*HistoBorder))+Min</l>
+<l>    MaxZoom := (Col2-Width*HistoBorder)*(Max-Min)/(Width*(1.0-2.0*HistoBorder))+Min</l>
+<l>    if (MinZoom # MaxZoom)</l>
+<l>        gray_histo_range (Image, Image, MinZoom, MaxZoom, int(MaxZoom-MinZoom+1), HistoZoom, BinSize)</l>
+<c>        * </c>
+<c>        * Plot the original histogram and the selected part</c>
+<l>        dev_clear_window ()</l>
+<l>        plot_2_histo (Histo, WindowHandleHisto, 'Gray values', Min, Max, MinZoom, MaxZoom, 'white', 'dim gray', SelectionColor, HistoBorder)</l>
+<l>        disp_message (WindowHandleHisto, 'Selected gray-value range', 'image', 12, 12, 'black', 'true')</l>
+<l>        disp_message (WindowHandleHisto, 'Press mouse button to show zoomed histogram', 'image', Height-50, 12, 'black', 'true')</l>
+<c>        * </c>
+<c>        * Display the region of the selected gray values</c>
+<l>        dev_set_window (WindowHandleImage)</l>
+<l>        threshold (Image, ScaleRegion, MinZoom, MaxZoom)</l>
+<l>        dev_display (Image)</l>
+<l>        dev_set_draw ('margin')</l>
+<l>        dev_set_color (SelectionColor)</l>
+<l>        dev_display (ScaleRegion)</l>
+<l>        disp_message (WindowHandleImage, 'Selected gray-values', 'window', 12, 12, 'black', 'true')</l>
+<c>        * </c>
+<c>        * Wait for mouse click to continue</c>
+<l>        get_mbutton (WindowHandleHisto, Row, Column, Button)</l>
+<c>        * </c>
+<c>        * Plot the histogram of the selected gray values</c>
+<l>        dev_set_window (WindowHandleHisto)</l>
+<l>        dev_clear_window ()</l>
+<l>        plot_histo (HistoZoom, WindowHandleHisto, 'Gray values', MinZoom, MaxZoom, 'white', SelectionColor, HistoBorder)</l>
+<l>        disp_message (WindowHandleHisto, 'Press left mouse button to start over.\nPress right mouse button to quit.', 'image', Height-50, 12, 'black', 'true')</l>
+<c>        * </c>
+<c>        * Scale image to selected gray values to improve contrast and display it</c>
+<l>        scale_image_range (Image, ImageScaled, MinZoom, MaxZoom)</l>
+<l>        dev_set_window (WindowHandleImage)</l>
+<l>        dev_display (ImageScaled)</l>
+<l>        dev_set_draw ('margin')</l>
+<l>        dev_set_color (SelectionColor)</l>
+<l>        dev_display (ScaleRegion)</l>
+<l>        disp_message (WindowHandleImage, 'Scaled image', 'window', 12, 12, 'black', 'true')</l>
+<c>        * </c>
+<c>        * Wait for mouse click to continue (left to repeat, right to exit)</c>
+<l>        get_mbutton (WindowHandleHisto, Row, Column, Button)</l>
+<l>    endif</l>
+<l>endwhile</l>
+<l>dev_set_window (WindowHandleHisto)</l>
+<l>dev_close_window ()</l>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+<procedure name="plot_histo">
+<interface>
+<ic>
+<par name="Histogram"/>
+<par name="WindowHandle"/>
+<par name="LabelX"/>
+<par name="ValueXMin"/>
+<par name="ValueXMax"/>
+<par name="ColorAxis"/>
+<par name="ColorGraph"/>
+<par name="Border"/>
+</ic>
+</interface>
+<body>
+<c>* This procedure plots the Histogram within the value range</c>
+<c>* [LabelXMin,LabelXMax] into the WindowHandle by leaving a</c>
+<c>* relative Border around the plot.</c>
+<c>* </c>
+<l>if (|Histogram|&lt;=0 or Border&lt;0 or Border&gt;=1)</l>
+<l>    disp_message (WindowHandle, 'Failed to plot histogram', 'window', 12, 12, 'black', 'true')</l>
+<l>    return ()</l>
+<l>endif</l>
+<c>* </c>
+<c>* Determine the area to be used for the plot.</c>
+<l>get_part (WindowHandle, Row1, Column1, Row2, Column2)</l>
+<l>PlotAreaX := (Column2-Column1+1)*(1-Border*2)</l>
+<l>PlotAreaY := (Row2-Row1+1)*(1-Border*2)</l>
+<l>OriginX := Column1+Border*(Column2-Column1+1)</l>
+<l>OriginY := Row2-Border*(Row2-Column1+1)</l>
+<c>* </c>
+<c>* Determine the extent of the function to be plotted</c>
+<l>MinY := min([Histogram,0])</l>
+<l>MaxY := max(Histogram)</l>
+<c>* </c>
+<c>* Determine the scaling values</c>
+<l>ScaleX := PlotAreaX/|Histogram|</l>
+<l>if (MaxY = MinY)</l>
+<l>    ScaleY := PlotAreaY</l>
+<l>    MaxY := ''</l>
+<l>else</l>
+<l>    ScaleY := PlotAreaY/(MaxY-MinY)</l>
+<l>endif</l>
+<c>* </c>
+<c>* Display the histogram values</c>
+<l>polyX := []</l>
+<l>polyY := []</l>
+<l>for Value := 0 to |Histogram|-1 by 1</l>
+<l>    polyX := [polyX, OriginX+Value*ScaleX]</l>
+<l>    polyY := [polyY, OriginY-(Histogram[Value]-MinY)*ScaleY]</l>
+<l>    polyX := [polyX, OriginX+(Value+1)*ScaleX]</l>
+<l>    polyY := [polyY, OriginY-(Histogram[Value]-MinY)*ScaleY]</l>
+<l>endfor</l>
+<l>polyX := [polyX, OriginX+|Histogram|*ScaleX, OriginX]</l>
+<l>polyY := [polyY, OriginY, OriginY]</l>
+<l>dev_set_window (WindowHandle)</l>
+<l>dev_set_line_width (1)</l>
+<l>dev_set_color (ColorGraph)</l>
+<l>gen_region_polygon_filled (Histo, polyY, polyX)</l>
+<l>dev_display (Histo)</l>
+<c>* </c>
+<c>* Display the coordinate system</c>
+<l>dev_set_line_width (1)</l>
+<l>dev_set_color (ColorAxis)</l>
+<l>gen_arrow_contour_xld (ArrowX, OriginY, OriginX, OriginY, OriginX+PlotAreaX, 5, 5)</l>
+<l>gen_arrow_contour_xld (ArrowY, OriginY, OriginX, OriginY-PlotAreaY, OriginX, 5, 5)</l>
+<l>dev_display (ArrowX)</l>
+<l>dev_display (ArrowY)</l>
+<c>* </c>
+<l>dev_set_color (ColorAxis)</l>
+<l>get_string_extents (WindowHandle, LabelX, Ascent, Descent, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY+10, OriginX+PlotAreaX/2-W/2)</l>
+<l>write_string (WindowHandle, LabelX)</l>
+<c>* </c>
+<l>if (int(ValueXMin) = ValueXMin)</l>
+<l>    MinXD := int(ValueXMin)</l>
+<l>else</l>
+<l>    MinXD := ValueXMin</l>
+<l>endif</l>
+<l>get_string_extents (WindowHandle, MinXD$'3.1f', Ascent1, Descent1, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY+10, OriginX)</l>
+<l>write_string (WindowHandle, MinXD$'3.1f')</l>
+<l>if (int(ValueXMax) = ValueXMax)</l>
+<l>    MaxXD := int(ValueXMax)</l>
+<l>else</l>
+<l>    MaxXD := ValueXMax</l>
+<l>endif</l>
+<l>get_string_extents (WindowHandle, MaxXD$'3.1f', Ascent2, Descent2, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY+10, OriginX+PlotAreaX-W)</l>
+<l>write_string (WindowHandle, MaxXD$'3.1f')</l>
+<l>get_string_extents (WindowHandle, MinY, Ascent3, Descent3, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY-H, OriginX-10-W)</l>
+<l>write_string (WindowHandle, MinY)</l>
+<l>get_string_extents (WindowHandle, MaxY, Ascent4, Descent4, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY-PlotAreaY, OriginX-10-W)</l>
+<l>write_string (WindowHandle, MaxY)</l>
+<c>* </c>
+<l>return ()</l>
+</body>
+<docu id="plot_histo">
+<parameters>
+<parameter id="Border"/>
+<parameter id="ColorAxis"/>
+<parameter id="ColorGraph"/>
+<parameter id="Histogram"/>
+<parameter id="LabelX"/>
+<parameter id="ValueXMax"/>
+<parameter id="ValueXMin"/>
+<parameter id="WindowHandle"/>
+</parameters>
+</docu>
+</procedure>
+<procedure name="plot_2_histo">
+<interface>
+<ic>
+<par name="Histogram"/>
+<par name="WindowHandle"/>
+<par name="LabelX"/>
+<par name="ValueXMin"/>
+<par name="ValueXMax"/>
+<par name="ValueXMin2"/>
+<par name="ValueXMax2"/>
+<par name="ColorAxis"/>
+<par name="ColorGraph"/>
+<par name="ColorGraph2"/>
+<par name="Border"/>
+</ic>
+</interface>
+<body>
+<c>* This procedure plots the Histogram within the value range</c>
+<c>* [ValueXMin2,ValueXMax2] into the WindowHandle by leaving a</c>
+<c>* relative Border around the plot.</c>
+<c>* The histogram is overlayed by a partial histogram within</c>
+<c>* the value range [ValueXMin2,ValueXMax2].</c>
+<c>* The parameters ColorAxis, ColorGraph and ColorGraph2 specify the</c>
+<c>* display colors for the coordinate system and the data.</c>
+<c>* </c>
+<l>if (|Histogram|&lt;=0 or Border&lt;0 or Border&gt;=1)</l>
+<l>    disp_message (WindowHandle, 'Failed to plot histogram', 'window', 12, 12, 'black', 'true')</l>
+<l>    return ()</l>
+<l>endif</l>
+<c>* </c>
+<c>* Determine the area to be used for the plot.</c>
+<l>get_part (WindowHandle, Row1, Column1, Row2, Column2)</l>
+<l>PlotAreaX := (Column2-Column1+1)*(1-Border*2)</l>
+<l>PlotAreaY := (Row2-Row1+1)*(1-Border*2)</l>
+<l>OriginX := Column1+Border*(Column2-Column1+1)</l>
+<l>OriginY := Row2-Border*(Row2-Column1+1)</l>
+<c>* </c>
+<c>* Determine the extent of the function to be plotted</c>
+<l>MinY := min([Histogram,0])</l>
+<l>MaxY := max(Histogram)</l>
+<c>* </c>
+<c>* Determine the scaling values</c>
+<l>ScaleX := PlotAreaX/|Histogram|</l>
+<l>if (MaxY = MinY)</l>
+<l>    ScaleY := PlotAreaY</l>
+<l>    MaxY := ''</l>
+<l>else</l>
+<l>    ScaleY := PlotAreaY/(MaxY-MinY)</l>
+<l>endif</l>
+<c>* </c>
+<c>* Display the histogram values</c>
+<l>PolyX := []</l>
+<l>PolyY := []</l>
+<l>for Value := 0 to |Histogram|-1 by 1</l>
+<l>    PolyX := [PolyX, OriginX+Value*ScaleX]</l>
+<l>    PolyY := [PolyY, OriginY-(Histogram[Value]-MinY)*ScaleY]</l>
+<l>    PolyX := [PolyX, OriginX+(Value+1)*ScaleX]</l>
+<l>    PolyY := [PolyY, OriginY-(Histogram[Value]-MinY)*ScaleY]</l>
+<l>endfor</l>
+<l>PolyX := [PolyX, OriginX+|Histogram|*ScaleX, OriginX]</l>
+<l>PolyY := [PolyY, OriginY, OriginY]</l>
+<l>dev_set_window (WindowHandle)</l>
+<l>dev_set_line_width (1)</l>
+<l>dev_set_color (ColorGraph)</l>
+<l>gen_region_polygon_filled (Histo, PolyY, PolyX)</l>
+<l>dev_display (Histo)</l>
+<c>* </c>
+<c>* Display the overlayed histogram</c>
+<l>StartZoom := max([0,int((|Histogram|*(ValueXMin2-ValueXMin))/(ValueXMax-ValueXMin))])</l>
+<l>EndZoom := min([|Histogram|-1,int((|Histogram|*(ValueXMax2-ValueXMin))/(ValueXMax-ValueXMin))])</l>
+<l>PolyX := []</l>
+<l>PolyY := []</l>
+<l>for Value := StartZoom to EndZoom by 1</l>
+<l>    PolyX := [PolyX, OriginX+Value*ScaleX]</l>
+<l>    PolyY := [PolyY, OriginY-(Histogram[Value]-MinY)*ScaleY]</l>
+<l>    PolyX := [PolyX, OriginX+(Value+1)*ScaleX]</l>
+<l>    PolyY := [PolyY, OriginY-(Histogram[Value]-MinY)*ScaleY]</l>
+<l>endfor</l>
+<l>PolyX := [PolyX, OriginX+(EndZoom+1)*ScaleX, OriginX+StartZoom*ScaleX]</l>
+<l>PolyY := [PolyY, OriginY, OriginY]</l>
+<l>dev_set_window (WindowHandle)</l>
+<l>dev_set_line_width (1)</l>
+<l>dev_set_color (ColorGraph2)</l>
+<l>gen_region_polygon_filled (HistoZoom, PolyY, PolyX)</l>
+<l>dev_display (HistoZoom)</l>
+<c>* </c>
+<c>* Display the coordinate system</c>
+<l>dev_set_line_width (1)</l>
+<l>dev_set_color (ColorAxis)</l>
+<l>gen_arrow_contour_xld (ArrowX, OriginY, OriginX, OriginY, OriginX+PlotAreaX, 5, 5)</l>
+<l>gen_arrow_contour_xld (ArrowY, OriginY, OriginX, OriginY-PlotAreaY, OriginX, 5, 5)</l>
+<l>dev_display (ArrowX)</l>
+<l>dev_display (ArrowY)</l>
+<c>* </c>
+<l>dev_set_color (ColorAxis)</l>
+<l>get_string_extents (WindowHandle, LabelX, Ascent, Descent, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY+10, OriginX+PlotAreaX/2-W/2)</l>
+<l>write_string (WindowHandle, LabelX)</l>
+<c>* </c>
+<l>if (int(ValueXMin) = ValueXMin)</l>
+<l>    MinXD := int(ValueXMin)</l>
+<l>else</l>
+<l>    MinXD := ValueXMin</l>
+<l>endif</l>
+<l>get_string_extents (WindowHandle, MinXD$'3.1f', Ascent1, Descent1, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY+10, OriginX)</l>
+<l>write_string (WindowHandle, MinXD$'3.1f')</l>
+<l>if (int(ValueXMax) = ValueXMax)</l>
+<l>    MaxXD := int(ValueXMax)</l>
+<l>else</l>
+<l>    MaxXD := ValueXMax</l>
+<l>endif</l>
+<l>get_string_extents (WindowHandle, MaxXD$'3.1f', Ascent2, Descent2, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY+10, OriginX+PlotAreaX-W)</l>
+<l>write_string (WindowHandle, MaxXD$'3.1f')</l>
+<l>get_string_extents (WindowHandle, MinY, Ascent3, Descent3, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY-H, OriginX-10-W)</l>
+<l>write_string (WindowHandle, MinY)</l>
+<l>get_string_extents (WindowHandle, MaxY, Ascent4, Descent4, W, H)</l>
+<l>set_tposition (WindowHandle, OriginY-PlotAreaY, OriginX-10-W)</l>
+<l>write_string (WindowHandle, MaxY)</l>
+<c>* </c>
+<l>return ()</l>
+</body>
+<docu id="plot_2_histo">
+<parameters>
+<parameter id="Border"/>
+<parameter id="ColorAxis"/>
+<parameter id="ColorGraph"/>
+<parameter id="ColorGraph2"/>
+<parameter id="Histogram"/>
+<parameter id="LabelX"/>
+<parameter id="ValueXMax"/>
+<parameter id="ValueXMax2"/>
+<parameter id="ValueXMin"/>
+<parameter id="ValueXMin2"/>
+<parameter id="WindowHandle"/>
+</parameters>
+</docu>
+</procedure>
+</hdevelop>

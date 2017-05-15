@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="10.0" cs="313424801">
+<procedure name="main">
+<interface/>
+<body>
+<l>a := pow(10, 12)</l>
+<l>w := a$'.3f'</l>
+<c></c>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

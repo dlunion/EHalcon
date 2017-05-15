@@ -1,0 +1,51 @@
+
+' Writing to a non existing vector element is allowed. If necessary,
+' the vector is automatically filled with empty elements.
+hal.Vector5.at(4)
+' Vector elements can be used as parameters for operators or procedures
+' (as long as they have the required type).
+hal.赋值 (I, 0)
+.判断循环首 (hal.小于等于 (I, hal.减(hal.ImageVector.length(),1)))
+hal.sobel_amp(hal.ImageVector.at(I),hal.ImageVectorSobel.at(I),"sum_abs",3)
+I ＝ hal.加 (I, 1)
+.判断循环尾 ()
+' 
+' It is also possible to combine several .at() expressions to access the
+' subelements of multidimensional vectors.
+hal.Vector3dim.at(1)
+' Even the following is possible (though not exactly recommended).
+hal.Vector3dim.at(0)
+' 
+' Vector length:
+' The number of elements of a vector can be accessed with .length()
+hal.赋值(Length,hal.Vector1.length())
+' 
+' Vector manipulation:
+' .clear() clears a vector, i.e., removes all its elements:
+hal.赋值(Vector3dimCopy,Vector3dim)
+hal.Vector3dimCopy.clear()
+' Note, that the cleared vectors still keep their variable type. The
+' following assignments cause a type conflict and, therefore, are invalid!
+'* Vector3dimCopy.at(0) := 1
+'* Vector3dimCopy.at(0) := {1}
+' .remove() removes an element with given index from a vector.
+hal.Vector5.remove(0)
+' 
+' .insert() inserts at the given position one vector element into a vector.
+hal.Vector5.insert(1,2)
+' Again, the vector gets filled up with empty elements where necessary.
+hal.Vector5.insert(8,10)
+' 
+' Vector conversion:
+' Convert a tuple into a one-dimensional vector
+hal.赋值(Tuple3,hal.创建元组(1,2,3,4,5,6,7,8))
+hal.convert_tuple_to_vector_1d(Tuple3,1,Vector1FromTuple3)
+hal.convert_tuple_to_vector_1d(Tuple3,2,Vector2FromTuple3)
+' convert_vector_to_tuple concatenates all tuples that are contained in the
+' input vector of arbitrary dimension and stores them in the single
+' output tuple.
+hal.convert_vector_to_tuple(Vector5,TupleFromVector5)
+hal.convert_vector_to_tuple(Vector2dim,TupleFromVector2dim)
+' 
+' The variable view can be used to inspect vector variables
+hal.dev_inspect_ctrl(hal.创建元组(Tuple3,Vector1FromTuple3,Vector2FromTuple3,Vector5,TupleFromVector5,Vector2dim,TupleFromVector2dim,Vector3dim))

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="10.0" cs="584079063">
+<procedure name="main">
+<interface/>
+<body>
+<l>dev_display_shape_matching_results(1, 'red', 2, 3, 4, 1, 1, 0)</l>
+<l>dev_open_window_fit_image(img, 0, 0, -1, -1, WindowHandle)</l>
+<l>dev_open_window_fit_size(0, 0, 640, 480, -1, -1, WindowHandle1)</l>
+<l>dev_resize_window_fit_image(img, 0, 0, -1, -1)</l>
+<l>dev_resize_window_fit_size(0, 0, 640, 480, -1, -1)</l>
+<l>dev_update_off()</l>
+<l>dev_update_on()</l>
+<l>disp_3d_coord_system(WindowHandle1, [0.012,0,5e-006,5e-006,320,240,640,480], [0,0,1,0,0,0,0], 0.05)</l>
+<l>gen_arrow_contour_xld(Arrow, 100, 100, 200, 200, 5, 5)</l>
+<l>list_image_files('list', 'default', [], ImageFiles)</l>
+<l>parse_filename(ImageFiles, BaseName, Extension, Directory)</l>
+<l>scale_image_range(img, ImageScaled, 100, 200)</l>
+<l>sort_pairs(Directory, Directory, '1', Sorted1, Sorted2)</l>
+<l>tuple_gen_sequence(1, 10, 1, Sequence)</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

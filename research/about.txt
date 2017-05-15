@@ -1,0 +1,100 @@
+1.错误处理
+如果程序发生错误，先调试输出信息，错误的地方和原因，然后抛出的异常会执行到一个用户定义的函数上去，而这个函数返回值来控制决定是否停止运行。
+
+定义一个函数“设置错误处理”，参数有：错误时暂停，错误时执行函数
+如果发生错误，会先输出异常并暂停下来
+
+2.类型定义为以下几种：
+字符串类型、整数、双精度小数、对象句柄(Hobject)、复合类型(HTuple，其中模型id也是这种类型的)
+
+所有参数，都使用特定定义的类型，这个类型有2个int，一个int存放flag
+flag = 0，表示这个对象指针是正常的
+flag = 1，表示这个对象指针是一次性的，也就是填入到函数中作为参数时，使用完毕即释放掉，
+主要应用场景是填参数时，如果参数是A函数创建的，那么返回的对象flag为1，如果A函数中有逻辑值
+那么flag则由最后一个逻辑值控制
+
+有函数S、D、I，有两个参数，第一参数是对象，第二个参数是索引，为空则默认是1，从1开始
+分别是：S = String、D = Double、I = Integer
+
+
+
+
+
+3.对于halcon中的输入输出类型，只有两种，Hobject和HTuple
+因此所有输入输出都必定为整数，为指针
+
+有函数：A，建立一个HTuple类型，参数可以无限添加，有3中，整数，小数，字符串，数组，逻辑型也被作为整数
+有函数：S、D、L、N，分别是取HTuple中的值和N取总数
+有函数：reset，清掉obj中的对象，建立空对象和清掉tuple中的对象建立空对象
+IsBadReadPtr和IsBadWritePtr可以检测指针问题
+
+
+整数指针指向一个自定义的struct，这个struct中有一个int是flag，另一个是HTuple和Hobject，flag指示着
+1，这个类型是htuple
+2，这个类型是hobject
+如果once_release=true，那么如果参数是输入参数（输出参数不理会），则会delete掉该数据
+
+struct Data{
+   bool once_release;  //使用一次就释放掉
+   HTuple*  tuple;
+}
+
+struct Obj{
+   bool once_release;
+   Hobject* obj;
+}
+
+应该还有一个函数，是往已有的tuple中添加数据，以及删除
+
+5.两个局部变量 a, b，他们的构造析构过程如下：
+其中有如下赋值代码
+a.empty ＝ 假
+b.empty ＝ 真
+b ＝ a
+
+* “a”
+* 0x004FC238, construct nArgCount = 1, isempty = 0 //构造a
+* 0x004FC260, construct nArgCount = 1, isempty = 0 //构造b
+* “aaa”
+* 0x004FC288, 0x004FC238, copy nArgCount = 2, isempty = -1163005939, 0  // b = a的过程，是先建立一个空白的对象Obj，然后执行copy函数，所以isempty是没有初始化的区域
+* 0x004FC260, free nArgCount = 1, isempty = 1 //然后释放掉原来的b，赋值完成后就释放掉了，执行free函数
+* “cc”
+* 0x004FC238, free nArgCount = 1, isempty = 0 //函数结束的时候，释放掉a
+* 0x004FC288, free nArgCount = 1, isempty = -1163005939 //释放掉b（赋值的时候重新创建的b，由于copy的时候那函数啥都没做，所以依旧是未初始化的形态）
+
+这里面需要存储两种对象，一种是Hobject，一种是HTuple，
+
+
+1.所有函数没有返回值
+2.所有参数都只有两种情况，Hobject和HTuple，而如果参数不是数组的，则
+直接是单个类型（double, int, string），如果支持数组则是HTuple类型
+3.对于参数的输出，是引用类型
+4.对于有默认值的参数，定义为允许不填写，如果不填写，则使用默认值
+5.对于常量值的定义，产生常量值
+6.关于函数返回值，错误代码也需要定义
+7.关于dev函数，和window的函数，需要重新定义
+8.所有函数返回值为整数型，是错误代码
+
+
+1.函数的形式，只有一种，就是带参数的，返回值为整数的
+2.参数的形式，是object、tuple、双精度、字符串、整数，没别的可能了，对于参数，还需要是，有默认值则这个参数可以为空，为空即默认值，
+对于输出，只有是tuple和object
+3.常量的定义，命名为hcs_xxx，常量只需要文本值的，数值型的以提示列出来
+
+***对于halcon中的默认值，只是为了编写代码的时候可以带出来，其函数本身并没有说你给空值就能默认的，到易里面需要自己写默认值***
+4.默认值先不管
+
+
+5.对于参数，如果是multivalue=false、input_control、type_list=（real、string、integer）时为单值（string、double、long）
+除此以外都用tuple
+
+
+
+
+
+对于默认值的定义，是default_value成员大于0的时候（需要解析，存在[]数组的情况和非数组情况），则使用默认值
+
+
+
+
+

@@ -1,0 +1,131 @@
+tuple_chr (0xb0, DegreeSign)
+global def tuple gDispObjOffset
+global def tuple gLabelsFont
+global def tuple gLabelsDecor
+global def tuple gInfoFont
+global def tuple gInfoDecor
+global def tuple gInfoPos
+global def tuple gTitleFont
+global def tuple gTitlePos
+global def tuple gTitleDecor
+global tuple gDispObjOffset
+global tuple gLabelsFont
+global tuple gLabelsDecor
+global tuple gLabelsFont
+global tuple gInfoFont
+global tuple gInfoDecor
+global tuple gInfoPos
+global tuple gTitleFont
+global tuple gTitlePos
+global tuple gTitleDecor
+select_obj (Domains, Boxes, Ind[ |Ind|-3:|Ind|-1 ] + 1)
+Ind3 := [ Ind1[Ind2[0]],  Ind1[Ind2[|Ind2|-1]] ]
+T1 := [ X[Ind3[0]], Y[Ind3[0]], Z[Ind3[0]] ]-[ X[Ind3[1]], Y[Ind3[1]], Z[Ind3[1]] ]
+Ind3 := [ Ind1[Ind2[0]],  Ind1[Ind2[|Ind2|-1]] ]
+T2 := [ X[Ind3[0]], Y[Ind3[0]], Z[Ind3[0]] ]-[ X[Ind3[1]], Y[Ind3[1]], Z[Ind3[1]] ]
+c := [c, a[1]*b[2]-a[2]*b[1] ]
+c := [c, a[2]*b[0]-a[0]*b[2] ]
+c := [c, a[0]*b[1]-a[1]*b[0] ]
+global tuple gDispObjOffset
+global tuple gLabelsFont
+global tuple gLabelsDecor
+global def tuple gDispObjOffset
+global def tuple gLabelsFont
+global def tuple gLabelsDecor
+global def tuple gInfoFont
+global def tuple gInfoDecor
+global def tuple gInfoPos
+global def tuple gTitleFont
+global def tuple gTitlePos
+global def tuple gTitleDecor
+global tuple gLabelsFont
+global tuple gInfoFont
+global tuple gInfoDecor
+global tuple gInfoPos
+global tuple gTitleFont
+global tuple gTitlePos
+global tuple gTitleDecor
+Message := ['Value:', DecodedDataStrings[I-1]{0:(Length/2)-1}, DecodedDataStrings[I-1]{Length/2:Length-1}]
+select_tuple_larger (-FishLength1, -(TargetLength-ToleranceLow), IndicesBad2)
+global def tuple gDispObjOffset
+global def tuple gLabelsFont
+global def tuple gLabelsDecor
+global def tuple gInfoFont
+global def tuple gInfoDecor
+global def tuple gInfoPos
+global def tuple gTitleFont
+global def tuple gTitlePos
+global def tuple gTitleDecor
+global tuple gDispObjOffset
+global tuple gLabelsFont
+global tuple gLabelsDecor
+global tuple gLabelsFont
+global tuple gInfoFont
+global tuple gInfoDecor
+global tuple gInfoPos
+global tuple gTitleFont
+global tuple gTitlePos
+global tuple gTitleDecor
+tuple_chr (0xb0, DegreeSign)
+dev_update_off ( )
+tuple_chr (0xb0, DegreeSign)
+tuple_chr (0xb0, DegreeSign)
+global tuple gLabelsFont
+global tuple gInfoFont
+global tuple gInfoDecor
+global tuple gInfoPos
+global tuple gTitleFont
+global tuple gTitlePos
+global tuple gTitleDecor
+global def tuple gDispObjOffset
+global def tuple gLabelsFont
+global def tuple gLabelsDecor
+global def tuple gInfoFont
+global def tuple gInfoDecor
+global def tuple gInfoPos
+global def tuple gTitleFont
+global def tuple gTitlePos
+global def tuple gTitleDecor
+global tuple gDispObjOffset
+global tuple gLabelsFont
+global tuple gLabelsDecor
+disp_message (WindowHandle, 'Orientation = ' + Orientation[I] $ '.1f'+chr(0xb0), 'image', Row[I]-30, Column[I]-120, 'black', 'true')
+Message := Mode + ': '+InputOrient+chr(0xb0)+' +/- '+InputOrientTol+chr(0xb0)
+NewExposure := min( [ExposureRange[1], Exposure] )
+if (Parameters[i]{0:2} = 'do_')
+if (Parameters[i]{0:2} = 'do_')
+set_framegrabber_param (AcqHandle, 'register_address', 0x00000520)
+BaseValue := 0x02000000
+GrabCount := 0x00000001
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (Parameters[i]{0:2} = 'do_')
+if (Parameters[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_' or Access = 'wo')
+if (ParameterInfoValues[i]{0:2} = 'do_' or Access = 'wo')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_' or Access = 'wo')
+CurrentParameter := ParameterInfoValues[i]{0:Position-1}
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_' or Access = 'wo')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+NewExposure := min( [ExposureRange[1], Exposure] )
+NewExposure := min( [ExposureRange[1], Exposure] )
+if (HalconError = H_MSG_TRUE or ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+if (ParameterInfoValues[i]{0:2} = 'do_')
+To := [ From[0], From[1] ]

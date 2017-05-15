@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="e.lib">
+      <UniqueIdentifier>{f59e3b72-264e-4e10-82a1-cadd1ce1149e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ehalcon.core">
+      <UniqueIdentifier>{9ab19cd6-1926-46c1-89f3-8db0156785e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="e.lib.core">
+      <UniqueIdentifier>{ba0c87af-280d-4199-a6d1-1bbef791bef5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="e.lib.core.define">
+      <UniqueIdentifier>{f7205d7d-4ea4-413e-963d-45fcda89086a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ehalcon.utils">
+      <UniqueIdentifier>{fe7b5af3-e708-459c-a345-4f556e447894}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="e.lib.utils">
+      <UniqueIdentifier>{fa48f387-cada-4ff9-aa04-2fe0fe9a6ed0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="e.lib\entry.cpp">
+      <Filter>e.lib</Filter>
+    </ClCompile>
+    <ClCompile Include="ehalcon.utils\windowManager.cpp">
+      <Filter>ehalcon.utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ehalcon.utils\objectInfo.cpp">
+      <Filter>ehalcon.utils</Filter>
+    </ClCompile>
+    <ClCompile Include="e.lib.core\e.lib.core.cpp">
+      <Filter>e.lib.core</Filter>
+    </ClCompile>
+    <ClCompile Include="ehalcon.core\ehalcon.core.cpp">
+      <Filter>ehalcon.core</Filter>
+    </ClCompile>
+    <ClCompile Include="e.lib.utils\e.lib.utils.cpp">
+      <Filter>e.lib.utils</Filter>
+    </ClCompile>
+    <ClCompile Include="ehalcon.utils\ehalcon.utils.cpp">
+      <Filter>ehalcon.utils</Filter>
+    </ClCompile>
+    <ClCompile Include="e.lib.core\function.impl.cpp">
+      <Filter>e.lib.core</Filter>
+    </ClCompile>
+    <ClCompile Include="e.lib.core\function.plus.cpp">
+      <Filter>e.lib.core</Filter>
+    </ClCompile>
+    <ClCompile Include="e.lib.utils\bmp.cpp">
+      <Filter>e.lib.utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="def.h" />
+    <ClInclude Include="e.lib.core.define\arg.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\const.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\dataType.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\eDefine.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="ehalcon.utils\windowManager.h">
+      <Filter>ehalcon.utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ehalcon.utils\objectInfo.h">
+      <Filter>ehalcon.utils</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core\e.lib.core.h">
+      <Filter>e.lib.core</Filter>
+    </ClInclude>
+    <ClInclude Include="ehalcon.core\ehalcon.core.h">
+      <Filter>ehalcon.core</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.utils\e.lib.utils.h">
+      <Filter>e.lib.utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ehalcon.utils\ehalcon.utils.h">
+      <Filter>ehalcon.utils</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\function.cmd.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\function.exe.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\function.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\function.halcon.cmd.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\function.halcon.exe.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core\function.impl.h">
+      <Filter>e.lib.core</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core.define\arg.halcon.h">
+      <Filter>e.lib.core.define</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.core\function.halcon.impl.h">
+      <Filter>e.lib.core</Filter>
+    </ClInclude>
+    <ClInclude Include="e.lib.utils\bmp.h">
+      <Filter>e.lib.utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="e.lib.core\function.halcon.impl.inl">
+      <Filter>e.lib.core</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+</Project>

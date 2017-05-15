@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hdevelop file_version="1.0" halcon_version="10.0" cs="407723443">
+<procedure name="main">
+<interface/>
+<body>
+<l>for i := 1 to 5 by 1 *aaa</l>
+<c></c>
+<l>endfor</l>
+<c></c>
+</body>
+<docu id="main">
+<parameters/>
+</docu>
+</procedure>
+</hdevelop>

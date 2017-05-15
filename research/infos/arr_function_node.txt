@@ -1,0 +1,23 @@
+short.ascii：短的简洁的描述：
+short.latex：短的简洁的描述带有函数链接：
+abstract.ascii：摘要：
+abstract.latex：摘要带有函数链接：
+functionality：对这个函数的功能描述：
+predecessor：可能的相关函数，前任Possible Predecessors：
+alternatives：替代函数：
+see_also：查看相关：
+keywords：关键字：
+module：模块：
+attention.ascii：请注意：
+attention.latex：请注意带函数连接的：
+references：引用的文章：
+successor：继承自，可能的子项，后来者：
+result_state.ascii：结果状态：
+result_state.latex：结果状态带连接的：
+example.trias：案例，halcon代码：
+complexity.ascii：复杂度描述：
+complexity.latex：复杂度描述：
+example.c：案例，c语言代码：
+example.c++：案例代码，c++的：
+warning.ascii：警告：
+warning.latex：警告，带连接的：
